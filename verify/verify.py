@@ -26,7 +26,7 @@ class verify_button(discord.ui.View):
     def __init__(self):
         super().__init__(timeout=None)
 
-    @discord.ui.button(label="Start", style=discord.ButtonStyle.green, custom_id="verify") # the verify button:
+    @discord.ui.button(label="Start", style=discord.ButtonStyle.green, custom_id="verify") # the verify button.
     async def verify_callback(self, button, interaction):
         role = discord.utils.get(interaction.guild.roles, id=verify_role)
         if role in interaction.user.roles: # check of user has the role.

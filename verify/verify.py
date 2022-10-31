@@ -43,12 +43,15 @@ class verify_modal(discord.ui.Modal):
         self.add_item(discord.ui.InputText(label=f"Your code is {self.verify_code}", placeholder="Type here your code..", max_length=4))
 
     async def callback(self, interaction: discord.Interaction):
-        if int(self.children[0].value) == self.verify_code: # checking the correctness of the code is
-            role = discord.utils.get(interaction.guild.roles, id=verify_role)
-            await interaction.user.add_roles(role, reason="Verify was succesfully")
-            await interaction.response.send_message("Succesfully! The code you entered was correct.", ephemeral=True)
-        else:
-            await interaction.response.send_message("The code you entered was incorrect.", ephemeral=True)
+        try:
+            if int(self.children[0].value) == self.verify_code: # checking the correctness of the code is
+                role = discord.utils.get(interaction.guild.roles, id=verify_role)
+                await interaction.user.add_roles(role, reason="Verify was succesfully")
+                await interaction.response.send_message("Succesfully! The code you entered was correct.", ephemeral=True)
+            else:
+                await interaction.response.send_message("The code you entered was incorrect.", ephemeral=True)
+        except ValueError:
+            await interaction.response.send_message("Please enter numbers only.", ephemeral=True)
 
 
 def setup(bot):
